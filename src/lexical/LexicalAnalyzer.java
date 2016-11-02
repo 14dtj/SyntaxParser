@@ -15,14 +15,19 @@ public class LexicalAnalyzer {
     private LexicalData lexicalData;
     public char[] speOperator = {'<', '>', '!', '+', '-', '=', '|', '&'};
 
-    public List<Token> getTokens() {
+    public List<String> getTokens() {
         lexicalData = new LexicalData();
         programme = IOHelper.readFileByChar(inputFile);
-        List<Token> output = new ArrayList<>();
+        List<String> output = new ArrayList<>();
         while (tempIndex < programme.size()) {
             scan();
-            output.add(new Token(key, token));
+            if (key.equals("num") || key.equals("id")) {
+                output.add(key);
+            } else {
+                output.add(token);
+            }
         }
+        output.add("$");
         System.out.println("Analyze finished...");
         return output;
     }

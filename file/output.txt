@@ -1,39 +1,37 @@
-keyword62: while
-operator18: (
-ID: a
-operator40: ==
-int: 0
-operator19: )
-operator20: {
-keyword60: if
-operator18: (
-ID: b
-operator40: ==
-int: 1
-operator42: ||
-ID: b
-operator40: ==
-int: 2
-operator19: )
-operator20: {
-ID: a
-operator17: =
-int: 1
-operator12: *
-operator18: (
-int: 2
-operator10: +
-int: 3
-operator19: )
-operator32: ;
-operator21: }
-keyword61: else
-operator20: {
-ID: b
-operator17: =
-int: 1
-operator10: +
-int: 2
-operator32: ;
-operator21: }
-operator21: }
+S->while(C){S}
+C->DC'
+D->id==num
+C'->ε
+S->if(C){S}else{S}
+C->DC'
+D->id==num
+C'->||DC'
+D->id==num
+C'->ε
+S->id=E;
+E->TE'
+T->FT'
+F->num
+T'->*FT'
+F->(E)
+E->TE'
+T->FT'
+F->num
+T'->ε
+E'->+TE'
+T->FT'
+F->num
+T'->ε
+E'->ε
+T'->ε
+E'->ε
+S->id=E;
+E->TE'
+T->FT'
+F->num
+T'->ε
+E'->+TE'
+T->FT'
+F->num
+T'->ε
+E'->ε

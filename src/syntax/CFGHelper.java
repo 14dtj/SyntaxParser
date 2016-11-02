@@ -25,6 +25,26 @@ public class CFGHelper {
             "D->id==num"
     };
 
+    public static final String[][] splitCfgs = {
+            {";", "E", "=", "id"},
+            {"}", "S", "{", "else", "}", "S", "{", ")", "C", "(", "if"},
+            {"}", "S", "{", ")", "C", "(", "while"},
+            {"E'", "T"},
+            {"E'", "T", "+"},
+            {"-1"},
+            {"T'", "F"},
+            {"T'", "F", "*"},
+            {"-1"},
+            {")", "E", "("},
+            {"num"},
+            {"id"},
+            {"C'", "D"},
+            {"C'", "D", "||"},
+            {"-1"},
+            {")", "C", "("},
+            {"num", "==", "id"}
+    };
+
     public static final int[][] parseTable = {
             //   id	=	;	if	(	)	{	}	e	w	+	*	n	||	==	$
             {0, -1, -1, 1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1},//S
@@ -38,19 +58,19 @@ public class CFGHelper {
             {16, -1, -1, -1, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}//D
     };
 
-    public static final String[] n_terminals = {"id", "17", "32", "60", "18", "19", "20", "21",
-            "61", "62", "10", "12", "num", "42", "40", "END"};
+    public static final String[] terminals = {"id", "=", ";", "if", "(", ")", "{", "}",
+            "else", "while", "+", "*", "num", "||", "==", "$"};
 
-    public static final String[] teminals = {"S", "E", "E'", "T", "T'", "F", "C", "C'", "D"};
+    public static final String[] n_terminals = {"S", "E", "E'", "T", "T'", "F", "C", "C'", "D"};
 
-    public static String getCfg(String stackStr, String inputStr) {
-        int rowIndex = find(teminals, stackStr);
-        int colIndex = find(n_terminals, inputStr);
+    public static int getCfg(String stackStr, String inputStr) {
+        int rowIndex = find(n_terminals, stackStr);
+        int colIndex = find(terminals, inputStr);
         if ((rowIndex != -1) && (colIndex != -1)) {
             int index = parseTable[rowIndex][colIndex];
-            return cfgs[index];
+            return index;
         }
-        return "ERROR";
+        return -1;
     }
 
     private static int find(String[] list, String value) {
@@ -60,5 +80,14 @@ public class CFGHelper {
             }
         }
         return -1;
+    }
+
+    public static boolean isTerminal(String value) {
+        for (String str : terminals) {
+            if (str.equals(value)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
