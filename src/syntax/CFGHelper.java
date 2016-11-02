@@ -45,6 +45,9 @@ public class CFGHelper {
             {"num", "==", "id"}
     };
 
+    /**
+     * parse table
+     */
     public static final int[][] parseTable = {
             //   id	=	;	if	(	)	{	}	e	w	+	*	n	||	==	$
             {0, -1, -1, 1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1},//S

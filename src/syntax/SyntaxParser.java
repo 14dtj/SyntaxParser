@@ -11,7 +11,13 @@ import java.util.Stack;
  * Created by tjDu on 2016/11/1.
  */
 public class SyntaxParser {
+    /**
+     * token序列
+     */
     private List<String> tokens;
+    /**
+     * 状态栈
+     */
     private Stack<String> stack;
     private static List<String> output;
 
