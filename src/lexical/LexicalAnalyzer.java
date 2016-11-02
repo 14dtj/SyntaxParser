@@ -15,21 +15,16 @@ public class LexicalAnalyzer {
     private LexicalData lexicalData;
     public char[] speOperator = {'<', '>', '!', '+', '-', '=', '|', '&'};
 
-    public static void main(String[] args) {
-        LexicalAnalyzer analyzer = new LexicalAnalyzer();
-        analyzer.execute();
-    }
-
-    public void execute() {
+    public List<Token> getTokens() {
         lexicalData = new LexicalData();
         programme = IOHelper.readFileByChar(inputFile);
-        List<String> output = new ArrayList<>();
+        List<Token> output = new ArrayList<>();
         while (tempIndex < programme.size()) {
             scan();
-            output.add(key + ": " + token);
+            output.add(new Token(key, token));
         }
-        IOHelper.writeFile(output);
-        System.out.println("done");
+        System.out.println("Analyze finished...");
+        return output;
     }
 
     public void scan() {
@@ -50,10 +45,10 @@ public class LexicalAnalyzer {
                 temp = programme.get(tempIndex++);
             }
             tempIndex--;
-            key = "ID";
+            key = "id";
             int tag = lexicalData.isReservedWord(token);
             if (tag > 0) {
-                key = "keyword" + tag;
+                key = tag + "";
             }
         } else if (isDigit(temp)) {
             while (isDigit(temp)) {
@@ -73,9 +68,9 @@ public class LexicalAnalyzer {
                     }
                     temp = programme.get(tempIndex++);
                 }
-                key = "double";
+                key = "num";
             } else {
-                key = "int";
+                key = "num";
             }
             tempIndex--;
         } else {
@@ -88,10 +83,10 @@ public class LexicalAnalyzer {
                     int tag1 = lexicalData.isOperator(s);
                     if (tag1 > 0) {
                         token += t;
-                        key = "operator" + tag1;
+                        key = tag1 + "";
                         tempIndex++;
                     } else {
-                        key = "operator" + lexicalData.isOperator(temp + "");
+                        key = lexicalData.isOperator(temp + "") + "";
                     }
                 }
             } else {
@@ -99,7 +94,7 @@ public class LexicalAnalyzer {
                 if (tag < 0) {
                     key = "error";
                 } else {
-                    key = "operator" + tag;
+                    key = "" + tag;
                     token += temp;
                 }
             }
